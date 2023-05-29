@@ -1,10 +1,13 @@
 package com.ebook.myapp.ui.login
 
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
@@ -31,7 +34,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.ebook.myapp.R
+import com.ebook.myapp.component.GoogleButton
 import com.ebook.myapp.provide.LocalNavigationController
+import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -40,6 +45,9 @@ fun LoginScreen(viewModel: LoginScreenViewModel = hiltViewModel()) {
     val state by viewModel.state.collectAsState()
     var eventState by remember { mutableStateOf<LoginScreenViewModel.Event>(LoginScreenViewModel.Event.Idle) }
     val navigation = LocalNavigationController.current
+    val loginGoogleLauncher = rememberLauncherForActivityResult(contract = FirebaseAuthUIActivityResultContract()) {
+
+    }
 
     LaunchedEffect(Unit) {
         viewModel.event.collectLatest { event ->
@@ -54,6 +62,9 @@ fun LoginScreen(viewModel: LoginScreenViewModel = hiltViewModel()) {
                             inclusive = true
                         }
                     }
+                }
+                is LoginScreenViewModel.Event.LoginWithGoogle -> {
+                    loginGoogleLauncher.launch(event.intent)
                 }
             }
         }
@@ -127,6 +138,12 @@ fun LoginScreenContent(
                         eventLaunch.invoke(LoginScreenViewModel.UiEvent.RegisterUser(email, password))
                     }
                 )
+            }
+
+            Text(text = "or login with", style = MaterialTheme.typography.labelMedium)
+            Spacer(modifier = Modifier.height(8.dp))
+            GoogleButton {
+                onEvent.invoke(LoginScreenViewModel.UiEvent.LoginWithGoogle)
             }
         }
     }

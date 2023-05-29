@@ -1,10 +1,12 @@
 package com.ebook.myapp.ui.login
 
+import android.content.Intent
 import android.util.Log
 import androidx.lifecycle.viewModelScope
 import com.ebook.myapp.base.BaseViewModel
 import com.ebook.myapp.data.source.User
 import com.ebook.myapp.data.source.firebase.user.UserService
+import com.firebase.ui.auth.AuthUI
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -56,6 +58,9 @@ class LoginScreenViewModel @Inject constructor(
                 is UiEvent.RegisterUser -> {
                     registerUser(event.email, event.password)
                 }
+                is UiEvent.LoginWithGoogle -> {
+                    loginWithGoogle()
+                }
             }
         }
     }
@@ -80,6 +85,16 @@ class LoginScreenViewModel @Inject constructor(
         }
     }
 
+    private fun loginWithGoogle() {
+        viewModelScope.launch(Dispatchers.IO) {
+            val signInIntent = AuthUI.getInstance().createSignInIntentBuilder()
+                .setAvailableProviders(listOf(AuthUI.IdpConfig.GoogleBuilder().build()))
+                .setDefaultProvider(AuthUI.IdpConfig.GoogleBuilder().build())
+                .build()
+            _event.emit(Event.LoginWithGoogle(signInIntent))
+        }
+    }
+
     data class State(
         val currentUserID: String,
         val isLogin: Boolean,
@@ -88,6 +103,7 @@ class LoginScreenViewModel @Inject constructor(
     sealed class UiEvent {
         class LoginUser(val email: String, val password: String): UiEvent()
         class RegisterUser(val email: String, val password: String): UiEvent()
+        object LoginWithGoogle: UiEvent()
         object MoveToRegister: UiEvent()
         object MoveToLogin: UiEvent()
     }
@@ -96,6 +112,7 @@ class LoginScreenViewModel @Inject constructor(
         object Idle: Event()
         class Error(val message: String): Event()
         object MoveToHome: Event()
+        class LoginWithGoogle(val intent: Intent): Event()
     }
 
     companion object {
