@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "68480784988",
+    "project_id": "tentang-kita-74876",
+    "storage_bucket": "tentang-kita-74876.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:68480784988:android:8f380edf85e0cedb836499",
+        "android_client_info": {
+          "package_name": "com.ebook.myapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "68480784988-j8tq8vo1ntu9eqber42tjcmuianc9v29.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ebook.myapp",
+            "certificate_hash": "fadc6af7fd8f70dd518c706430b35cb474762fe9"
+          }
+        },
+        {
+          "client_id": "68480784988-pn2db4odc90uc14vus9mu6lm4i4328j1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeN2xFcmkewXOV6_fXS50krByyUrp2xuU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "68480784988-pn2db4odc90uc14vus9mu6lm4i4328j1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
