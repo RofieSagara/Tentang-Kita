@@ -61,6 +61,9 @@ class LoginScreenViewModel @Inject constructor(
                 is UiEvent.LoginWithGoogle -> {
                     loginWithGoogle()
                 }
+                is UiEvent.MoveToHome -> {
+                    _event.emit(Event.MoveToHome)
+                }
             }
         }
     }
@@ -106,6 +109,7 @@ class LoginScreenViewModel @Inject constructor(
         object LoginWithGoogle: UiEvent()
         object MoveToRegister: UiEvent()
         object MoveToLogin: UiEvent()
+        object MoveToHome: UiEvent()
     }
 
     sealed class Event {

@@ -2,6 +2,7 @@ package com.ebook.myapp.ui.login
 
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,6 +26,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -37,6 +39,7 @@ import com.ebook.myapp.R
 import com.ebook.myapp.component.GoogleButton
 import com.ebook.myapp.provide.LocalNavigationController
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 
 
@@ -46,11 +49,11 @@ fun LoginScreen(viewModel: LoginScreenViewModel = hiltViewModel()) {
     var eventState by remember { mutableStateOf<LoginScreenViewModel.Event>(LoginScreenViewModel.Event.Idle) }
     val navigation = LocalNavigationController.current
     val loginGoogleLauncher = rememberLauncherForActivityResult(contract = FirebaseAuthUIActivityResultContract()) {
-
+        viewModel.onEvent(LoginScreenViewModel.UiEvent.MoveToHome)
     }
 
     LaunchedEffect(Unit) {
-        viewModel.event.collectLatest { event ->
+        viewModel.event.collect { event ->
             when(event) {
                 is LoginScreenViewModel.Event.Error -> {
                     eventState = event
@@ -139,11 +142,15 @@ fun LoginScreenContent(
                     }
                 )
             }
-
-            Text(text = "or login with", style = MaterialTheme.typography.labelMedium)
+            Spacer(modifier = Modifier.height(24.dp))
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                Text(text = "or continue with", style = MaterialTheme.typography.labelMedium)
+            }
             Spacer(modifier = Modifier.height(8.dp))
-            GoogleButton {
-                onEvent.invoke(LoginScreenViewModel.UiEvent.LoginWithGoogle)
+            Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                GoogleButton {
+                    onEvent.invoke(LoginScreenViewModel.UiEvent.LoginWithGoogle)
+                }
             }
         }
     }

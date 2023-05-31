@@ -47,7 +47,7 @@ fun HomeScreen(viewModel: HomeScreenViewModel = hiltViewModel()) {
     val navigation = LocalNavigationController.current
 
     LaunchedEffect(Unit) {
-        viewModel.event.collectLatest { event ->
+        viewModel.event.collect { event ->
             when(event) {
                 is HomeScreenViewModel.Event.MoveToModule -> {
                     navigation.navigate("module?pack=${event.packID}")

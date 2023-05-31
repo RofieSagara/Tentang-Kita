@@ -49,7 +49,7 @@ fun ModuleScreen(viewModel: ModuleScreenViewModel = hiltViewModel(), packID: Str
     val navigation = LocalNavigationController.current
 
     LaunchedEffect(Unit) {
-        viewModel.event.collectLatest { event ->
+        viewModel.event.collect { event ->
             when(event) {
                 is ModuleScreenViewModel.Event.MoveToReader -> {
                     navigation.navigate("reader?path=${event.path}")

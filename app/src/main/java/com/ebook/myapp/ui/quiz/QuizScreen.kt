@@ -41,7 +41,7 @@ fun QuizScreen(viewModel: QuizScreenViewModel = hiltViewModel()) {
     val navigation = LocalNavigationController.current
 
     LaunchedEffect(Unit) {
-        viewModel.event.collectLatest { event ->
+        viewModel.event.collect { event ->
             when(event) {
                 is QuizScreenViewModel.Event.OnBack -> {
                     navigation.navigateUp()

@@ -34,7 +34,7 @@ fun ReaderScreen(viewModel: ReaderScreenViewModel = hiltViewModel(), path: Strin
     }
 
     LaunchedEffect(Unit) {
-        viewModel.event.collectLatest { event ->
+        viewModel.event.collect { event ->
             when(event) {
                 is ReaderScreenViewModel.Event.MoveBack -> {
                     navigation.navigateUp()
