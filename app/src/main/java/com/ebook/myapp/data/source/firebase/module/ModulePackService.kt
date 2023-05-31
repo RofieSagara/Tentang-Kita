@@ -23,7 +23,7 @@ class ModulePackService @Inject constructor(){
         val modulePackDataCollection = result.toObjects(ModulePack::class.java)
         emit(modulePackDataCollection)
     }.flatMapConcat {
-        flow { emit(it.map { it.copy(photo = it.photo.populateStorageLink()) }) }
+        flow { emit(it.map { it.copy(photo = it.photo.populateStorageLink()) }.sortedBy { it.index }) }
     }
 
     fun observerModuleCollection(packID: String) = flow {
@@ -32,7 +32,7 @@ class ModulePackService @Inject constructor(){
         val moduleDataCollection = result.toObjects(Module::class.java)
         emit(moduleDataCollection)
     }.flatMapConcat {
-        flow { emit(it.map { it.copy(photo = it.photo.populateStorageLink()) }) }
+        flow { emit(it.map { it.copy(photo = it.photo.populateStorageLink()) }.sortedBy { it.index }) }
     }
 
     fun observerModule(packID: String, moduleID: String) = flow {

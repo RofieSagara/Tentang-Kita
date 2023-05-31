@@ -4,5 +4,6 @@ data class Module(
     val id: String = "",
     val packID: String = "",
     val photo: String = "",
-    val file: String = ""
+    val file: String = "",
+    val index: Int = 0
 )

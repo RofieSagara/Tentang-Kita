@@ -6,4 +6,5 @@ data class ModulePack(
     val description: String = "",
     val photo: String = "",
     val background: String = "",
+    val index: Int = 0
 )

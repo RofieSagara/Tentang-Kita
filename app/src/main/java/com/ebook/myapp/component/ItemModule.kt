@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
@@ -34,7 +35,8 @@ fun ItemModule(
         Image(
             modifier = Modifier.fillMaxSize(),
             painter = imageCover,
-            contentDescription = null
+            contentDescription = null,
+            contentScale = ContentScale.Crop
         )
     }
 }
