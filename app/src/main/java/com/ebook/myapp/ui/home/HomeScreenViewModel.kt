@@ -11,6 +11,8 @@ import com.ebook.myapp.data.source.firebase.banner.BannerService
 import com.ebook.myapp.data.source.firebase.module.ModulePackService
 import com.ebook.myapp.data.source.firebase.quiz.QuizService
 import com.ebook.myapp.utils.populateStorageLink
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
@@ -90,6 +92,9 @@ class HomeScreenViewModel @Inject constructor(
                 is UiEvent.MoveToQuiz -> {
                     _event.emit(Event.MoveToQuiz)
                 }
+                is UiEvent.LogOut -> {
+                    Firebase.auth.signOut()
+                }
             }
         }
     }
@@ -105,6 +110,7 @@ class HomeScreenViewModel @Inject constructor(
         class MoveToModule(val pack: ModulePack): UiEvent()
         class MoveToReader(val banner: Banner): UiEvent()
         object MoveToQuiz: UiEvent()
+        object LogOut: UiEvent()
     }
 
     sealed class Event {

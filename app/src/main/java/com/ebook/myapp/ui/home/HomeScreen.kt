@@ -15,8 +15,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -78,7 +82,12 @@ fun HomeScreenContent(
         topBar = {
             CenterAlignedTopAppBar(
                 title = { Text(text = "My Book Tentang Kita") },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFF2CD3C9), titleContentColor = Color.White)
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFF2CD3C9), titleContentColor = Color.White),
+                actions = {
+                    IconButton(onClick = { onEvent.invoke(HomeScreenViewModel.UiEvent.LogOut) }) {
+                        Icon(imageVector = Icons.Default.ExitToApp, contentDescription = null, tint = Color.White)
+                    }
+                }
             )
         }
     ) { paddingValues ->
